@@ -1,10 +1,15 @@
-from flask import Flask, render_template , request
+from flask  import Flask, render_template , request
 import joblib
 
 dataset_url = 'https://github.com/JovianML/opendatasets/raw/master/data/house-prices-advanced-regression-techniques.zip'
 from urllib.request import urlretrieve
 from zipfile import ZipFile
 import numpy as np
+
+#initialse the app
+app = Flask(__name__)
+
+
 
 urlretrieve(dataset_url, 'house-prices.zip')
 with ZipFile('house-prices.zip') as f:
@@ -208,13 +213,13 @@ joblib.dump(house_price_predictor, 'house_price_predictor.joblib')
 
 
 
+@app.route('/')
+def home():
+    print(predict_input(sample_input))
+    return render_template('index.html',data=predict_input(sample_input))
 
-
-
-
-
-
-
+if __name__ == '__main__':
+    app.run(debug = True)
 
 
 # initialse the app
